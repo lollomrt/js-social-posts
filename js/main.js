@@ -1,3 +1,5 @@
+const userLikes = []
+
 const posts = [
     {
         "id": 1,
@@ -72,7 +74,7 @@ function generatorePostList(){
     let lista = document.querySelector(".posts-list")
     let post
     posts.forEach((elem) => {
-        console.log(generatoreDifferenzaData())
+        // console.log(generatoreDifferenzaData())
         post = document.createElement("div")
         post.classList.add("post")
         post.innerHTML = `<div class="post__header">
@@ -88,12 +90,12 @@ function generatorePostList(){
                             </div>
                             <div class="post__text">${elem.content}</div>
                             <div class="post__image">
-                                <img src="${elem.media}" alt="">
+                                <img src="${elem.media}" alt="${elem.author.name}">
                             </div>
                             <div class="post__footer">
                                 <div class="likes js-likes">
                                     <div class="likes__cta">
-                                        <a class="like-button  js-like-button" href="#" data-postid="${elem.id}">
+                                        <a class="like-button ${isPostLiked(elem.id) ? "like-button--liked" : ""} js-like-button" href="#" data-postid="${elem.id}">
                                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                                             <span class="like-button__label">Mi Piace</span>
                                         </a>
@@ -104,9 +106,37 @@ function generatorePostList(){
                                 </div> 
                             </div>`
         lista.appendChild(post)
+
     })
     
     return lista
+}
+
+function isPostLiked(postId){
+    return userLikes.includes(postId)
+}
+
+const likeButtons = document.getElementsByClassName(".js-like-button")
+const likeCounters = document.getElementsByClassName(".js-likes-counter")
+
+for (let i = 0; i < likeButtons.length; i++){
+    let element = likeButtons[i]
+    element.addEventListener("click", function(){
+        if (!element.classList.contains("like-button--liked")){
+            element.classList.add("like-button--liked")
+            let contatoreCorrente = likeCounters[i]
+            let numero = parseInt(contatoreCorrente.innerHTML)
+            contatoreCorrente.innerHTML = numero + 1
+            posts[i].likes++
+        }
+        else {
+            element.classList.remove("like-button--liked")
+            let contatoreCorrente = likeCounters[i]
+            let numero = parseInt(contatoreCorrente.innerHTML)
+            contatoreCorrente.innerHTML = numero - 1
+            posts[i].likes--
+        }
+    }) 
 }
 
 generatorePostList()
@@ -115,3 +145,17 @@ generatorePostList()
 
 
 
+// for (let i = 0; i < miPiace.length; i++){
+
+//     miPiace[i].addEventListener('click',function(){
+
+//         Element[i].cla
+//         const postId = this.dataset.postid
+//         const likes = document.getElementById(like-counter-${postId})
+//         const likesNumber = parseInt(likes.innerText)
+
+//         likes.innerText = likesNumber+1
+//             console.log(likesNumber)
+//     })
+// }
+// const miPiace = document.getElementsByClassName('js-like-button')
