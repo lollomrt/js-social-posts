@@ -123,7 +123,10 @@ const likeCounters = document.getElementsByClassName("js-likes-counter")
 
 for (let i = 0; i < likeButtons.length; i++){
     let element = likeButtons[i]
-    element.addEventListener("click", function(){
+    element.addEventListener("click", function(e){
+
+        e.preventDefault()
+
         if (!element.classList.contains("like-button--liked")){
             element.classList.add("like-button--liked")
             let contatoreCorrente = likeCounters[i]
