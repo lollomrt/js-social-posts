@@ -112,12 +112,14 @@ function generatorePostList(){
     return lista
 }
 
+generatorePostList()
+
 function isPostLiked(postId){
     return userLikes.includes(postId)
 }
 
-const likeButtons = document.getElementsByClassName(".js-like-button")
-const likeCounters = document.getElementsByClassName(".js-likes-counter")
+const likeButtons = document.getElementsByClassName("js-like-button")
+const likeCounters = document.getElementsByClassName("js-likes-counter")
 
 for (let i = 0; i < likeButtons.length; i++){
     let element = likeButtons[i]
@@ -138,8 +140,6 @@ for (let i = 0; i < likeButtons.length; i++){
         }
     }) 
 }
-
-generatorePostList()
 
         
 
